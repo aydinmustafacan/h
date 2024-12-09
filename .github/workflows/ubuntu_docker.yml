@@ -28,6 +28,14 @@ jobs:
           sudo apt update
           sudo apt install build-essential autoconf libtool pkg-config
 
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
+
       - name: Build Docker Image
         run: |
           docker build -t my-docker-image:latest .
@@ -35,4 +43,15 @@ jobs:
       - name: Docker Image List
         run: |
           docker images
-        
+
+      - name: Tag Docker Image
+        run: |
+          docker tag my-docker-image:latest ${{ secrets.DOCKER_USERNAME }}/my-docker-image:latest
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/my-docker-image:latest
+
+      - name: Docker Image List(Again)
+        run: |
+          docker images
