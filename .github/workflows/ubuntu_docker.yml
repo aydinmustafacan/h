@@ -28,7 +28,12 @@ jobs:
           sudo apt update
           sudo apt install build-essential autoconf libtool pkg-config
 
-      - name: Docker Build
+      - name: Build Docker Image
         run: |
           cd client
-          bazel build //:client
+          docker build -t my-docker-image:latest .
+
+      - name: Docker Image List
+        run: |
+          docker images
+        
