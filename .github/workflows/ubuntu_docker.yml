@@ -30,7 +30,6 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          cd client
           docker build -t my-docker-image:latest .
 
       - name: Docker Image List
