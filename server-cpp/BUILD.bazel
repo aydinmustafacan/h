@@ -9,7 +9,7 @@ cpp_grpc_library(
 )
 
 cc_binary(
-    name = "server",
+    name = "client",
     srcs = ["main.cpp"],
     deps = [":cpp_example_proto_lib"],
 )
