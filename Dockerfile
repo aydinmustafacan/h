@@ -37,7 +37,7 @@ COPY . .
 
 # Build the client target using Bazel
 # For client cd client && bazel build //:client --verbose_failures
-RUN cd server-cpp && bazel build //:client --verbose_failures
+RUN cd client && bazel build //:client --verbose_failures
 
 # Stage 2: Create a lightweight runtime image
 FROM --platform=linux/amd64 ubuntu:22.04 AS runtime
