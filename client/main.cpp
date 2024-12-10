@@ -21,6 +21,8 @@ class Client
 
         const auto status = stub_->SayHello(&context, request, &response);
 
+        std::cout << "Status: " << status.error_code() << std::endl;
+        std:: cout <<" Respose: " << response.message() << std::endl;
         std::string response_message{};
         if (status.ok())
         {
