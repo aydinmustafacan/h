@@ -1,9 +1,9 @@
-name: Ubuntu Docker Build
+name: Ubuntu Docker Client Build
 
 on:
   push:
     branches:
-      - main
+      - main2
   pull_request:
     types:
       - opened

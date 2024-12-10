@@ -1,0 +1,15 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cpp_grpc_library(
+    name = "cpp_example_proto_lib",
+    protos = ["@messages//:example_messages"],
+)
+
+cc_binary(
+    name = "server",
+    srcs = ["main.cpp"],
+    deps = [":cpp_example_proto_lib"],
+)

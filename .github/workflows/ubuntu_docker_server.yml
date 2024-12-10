@@ -1,0 +1,57 @@
+name: Ubuntu Docker Client Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Bazel
+        uses: abhinavsingh/setup-bazel@v3
+        with:
+          version: 5.4.0
+      - run: bazel version
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install build-essential autoconf libtool pkg-config
+
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
+
+      - name: Build Docker Image
+        run: |
+          docker build -t grpc-server:latest .
+
+      - name: Docker Image List
+        run: |
+          docker images
+
+      - name: Tag Docker Image
+        run: |
+          docker tag my-docker-image:latest ${{ secrets.DOCKER_USERNAME }}/grpc-server:latest
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/grpc-server:latest
+
+      - name: Docker Image List(Again)
+        run: |
+          docker images
