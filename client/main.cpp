@@ -1,7 +1,5 @@
 #include <grpcpp/grpcpp.h>
-
 #include <iostream>
-
 #include "example.grpc.pb.h"
 
 class Client
@@ -45,7 +43,8 @@ int main()
 {
     std::cout << "Starting client...\n";
 
-    const auto client = Client(grpc::CreateChannel("localhost:50000", grpc::InsecureChannelCredentials()));
+    // change to localhost for ubuntu!!!
+    const auto client = Client(grpc::CreateChannel("host.docker.internal:50000", grpc::InsecureChannelCredentials()));
     const auto response = client.SayHello("Zvonimir");
 
     std::cout << "Received following message: " << response;
