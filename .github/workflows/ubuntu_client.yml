@@ -24,6 +24,16 @@ jobs:
         run: |
           echo "Running on $(uname -m)"
 
+      - name: Set up QEMU (for ARM64 emulation)
+        if: matrix.arch == 'arm64'
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: arm64
+
+      - name: Check architecture 2
+        run: |
+          echo "Running on $(uname -m)"
+
       - uses: actions/checkout@v2
 
       - name: Setup Bazel
