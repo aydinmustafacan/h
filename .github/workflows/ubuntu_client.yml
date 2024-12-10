@@ -5,6 +5,8 @@ on:
     branches:
       - main2
   pull_request:
+    branches:
+      - main
     types:
       - opened
       - reopened
@@ -12,7 +14,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        arch: [ arm64, amd64 ]
 
     steps:
       - uses: actions/checkout@v2
