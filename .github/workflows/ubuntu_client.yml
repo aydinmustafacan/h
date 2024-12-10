@@ -20,6 +20,10 @@ jobs:
         arch: [ arm64, amd64 ]
 
     steps:
+      - name: Check architecture
+        run: |
+          echo "Running on $(uname -m)"
+
       - uses: actions/checkout@v2
 
       - name: Setup Bazel
